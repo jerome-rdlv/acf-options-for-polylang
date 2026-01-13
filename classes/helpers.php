@@ -95,8 +95,29 @@ class Helpers {
 	 * @return bool
 	 */
 	public static function already_localized( $post_id ) {
-		preg_match( '/[a-z]{2}_[A-Z]{2}/', $post_id, $language );
+		$locales_regex_fragment = self::locales_regex_fragment();
+		if ( ! $locales_regex_fragment ) {
+			return false;
+		}
+		preg_match( '/' . $locales_regex_fragment . '$/', $post_id, $language );
 
 		return ! empty( $language );
+	}
+
+	/**
+	 * @return string A regex fragment for all polylang configured locales
+	 */
+	public static function locales_regex_fragment(): string {
+		$locales = pll_languages_list( [ 'hide_empty' => false, 'fields' => 'locale' ] );
+		if ( ! $locales ) {
+			return '';
+		}
+
+		return sprintf(
+			'(%s)',
+			implode( '|', array_map( function ( $lang ) {
+				return preg_quote( $lang, '/' );
+			}, $locales ) )
+		);
 	}
 }
