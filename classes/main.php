@@ -55,7 +55,7 @@ class Main {
 		 * Dynamically get the options page ID
 		 * @see : https://regex101.com/r/58uhKg/2/
 		 */
-		$_post_id = preg_replace( '/(_'.Helpers::locales_regex_fragment().')$/', '', $post_id );
+		$_post_id = preg_replace( '/(_' . Helpers::locales_regex_fragment() . ')$/', '', $post_id );
 
 		remove_filter( 'acf/load_reference', [ $this, 'get_default_reference' ] );
 		$reference = acf_get_reference( $field_name, $_post_id );

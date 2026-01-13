@@ -95,21 +95,20 @@ class Helpers {
 	 * @return bool
 	 */
 	public static function already_localized( $post_id ) {
-		preg_match( '/'.self::locales_regex_fragment().'$/', $post_id, $language );
+		preg_match( '/' . self::locales_regex_fragment() . '$/', $post_id, $language );
 
 		return ! empty( $language );
 	}
 
-    /**
-     * @return string A regex fragment for all polylang configured locales
-     */
-    public static function locales_regex_fragment(): string
-    {
-        return sprintf(
-            '(%s)',
-            implode('|', array_map(function ($lang) {
-                return preg_quote($lang, '/');
-            }, pll_languages_list(['hide_empty' => false, 'fields' => 'locale'])))
-        );
-    }
+	/**
+	 * @return string A regex fragment for all polylang configured locales
+	 */
+	public static function locales_regex_fragment(): string {
+		return sprintf(
+			'(%s)',
+			implode( '|', array_map( function ( $lang ) {
+				return preg_quote( $lang, '/' );
+			}, pll_languages_list( [ 'hide_empty' => false, 'fields' => 'locale' ] ) ) )
+		);
+	}
 }
