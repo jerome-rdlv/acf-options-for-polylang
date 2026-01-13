@@ -47,9 +47,11 @@ class Main {
 	 *
 	 */
 	public function get_default_reference( $reference, $field_name, $post_id ) {
-		$locales_regex_fragment = Helpers::locales_regex_fragment();
+		if ( ! empty( $reference ) ) {
+			return $reference;
+		}
 
-		if ( ! empty( $reference ) || ! $locales_regex_fragment ) {
+		if ( ! $locales_regex_fragment = Helpers::locales_regex_fragment() ) {
 			return $reference;
 		}
 
