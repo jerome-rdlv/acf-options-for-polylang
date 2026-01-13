@@ -99,7 +99,7 @@ class Helpers {
 		if ( ! $locales_regex_fragment ) {
 			return false;
 		}
-		preg_match( '/' . $locales_regex_fragment . '$/', $post_id, $language );
+		preg_match( '/_(' . $locales_regex_fragment . ')$/', $post_id, $language );
 
 		return ! empty( $language );
 	}
