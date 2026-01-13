@@ -47,7 +47,9 @@ class Main {
 	 *
 	 */
 	public function get_default_reference( $reference, $field_name, $post_id ) {
-		if ( ! empty( $reference ) ) {
+		$locales_regex_fragment = Helpers::locales_regex_fragment();
+
+		if ( ! empty( $reference ) || ! $locales_regex_fragment ) {
 			return $reference;
 		}
 
@@ -55,7 +57,7 @@ class Main {
 		 * Dynamically get the options page ID
 		 * @see : https://regex101.com/r/58uhKg/2/
 		 */
-		$_post_id = preg_replace( '/(_' . Helpers::locales_regex_fragment() . ')$/', '', $post_id );
+		$_post_id = preg_replace( '/(_' . $locales_regex_fragment . ')$/', '', $post_id );
 
 		remove_filter( 'acf/load_reference', [ $this, 'get_default_reference' ] );
 		$reference = acf_get_reference( $field_name, $_post_id );
@@ -85,8 +87,8 @@ class Main {
 		/**
 		 * Activate or deactivate the default value (all languages) for the given post id
 		 *
-		 * @param bool $show_default : whatever to show default for the given post id
-		 * @param string $original_post_id : the original post id without lang attributes
+		 * @param  bool  $show_default  : whatever to show default for the given post id
+		 * @param  string  $original_post_id  : the original post id without lang attributes
 		 *
 		 * @since 1.0.4
 		 */
@@ -144,8 +146,8 @@ class Main {
 	/**
 	 * Manage to change the post_id with the current lang to save option against
 	 *
-	 * @param string $future_post_id
-	 * @param string $original_post_id
+	 * @param  string  $future_post_id
+	 * @param  string  $original_post_id
 	 *
 	 * @return string
 	 * @author Maxime CULEA
